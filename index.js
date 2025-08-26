@@ -1,15 +1,7 @@
-const express = require("express");
-const router = express.Router();
+const app = require('./src/app');
 
-console.log("Testando caminho do cliente.routes...");
-const clienteRoutes = require("../modules/cliente/cliente.routes");
-console.log("✅ Encontrou cliente.routes");
+const port = process.env.PORT || 3000;
 
-console.log("Testando caminho do produtos.routes...");
-const produtoRoutes = require("../routes/produtos.routes.js"); // Verifique se este caminho está certo
-console.log("✅ Encontrou produtos.routes");
-
-router.use("/clientes", clienteRoutes);
-router.use(produtoRoutes);
-
-module.exports = router;
+app.listen(port, () => {
+  console.log(`🚀 Servidor iniciado e ouvindo na porta ${port}`);
+});
