@@ -1,15 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const produtoRoutes = require('./routes/produtos.routes.js'); // Importe as rotas de produtos
-
-const app = express();
-app.use(express.json());
-
-app.get("/", (req, res) => res.send("Servidor rodando!"));
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`🚀 Servidor rodando na porta ${process.env.PORT || 3000}`);
-});
+const produtoRoutes = require('./routes/produtos.routes.js');
 
 class App {
   constructor() {
@@ -19,11 +10,15 @@ class App {
   }
 
   middlewares() {
-    this.server.use(express.json()); // Permite que o express entenda JSON
+    this.server.use(express.json());
   }
 
   routes() {
-    this.server.use('/api', produtoRoutes); // Use as rotas com o prefixo /api
+    console.log('✅ Rotas de produtos sendo carregadas...');
+    // Rota de teste
+    this.server.get("/", (req, res) => res.send("Servidor rodando corretamente!"));
+    // Rotas da API
+    this.server.use('/api', produtoRoutes);
   }
 }
 
