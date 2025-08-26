@@ -1,22 +1,25 @@
-const Produto = require('../../models/produto');
+// O Controller agora importa o Serviço, e não mais o Model.
+const ProdutoService = require('./ProdutoService');
 
 module.exports = {
-  // Método para listar todos os produtos
   async index(req, res) {
     try {
-      const produtos = await Produto.findAll();
+      // Delega a busca para a camada de serviço
+      const produtos = await ProdutoService.findAll();
       return res.json(produtos);
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao listar produtos.' });
     }
   },
 
-  // Método para criar um novo produto
   async store(req, res) {
-    console.log('Dados recebidos no corpo da requisição:', req.body);
     try {
-      const { nome, preco, estoque } = req.body;
-      const produto = await Produto.create({ nome, preco, estoque });
+      // O controller apenas pega os dados da requisição...
+      const dadosDoProduto = req.body;
+      
+      // ...e passa a responsabilidade para a camada de serviço.
+      const produto = await ProdutoService.create(dadosDoProduto);
+      
       return res.status(201).json(produto);
     } catch (error) {
       return res.status(400).json({ error: 'Falha ao criar produto.', details: error.message });
