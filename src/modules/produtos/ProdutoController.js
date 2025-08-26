@@ -13,6 +13,7 @@ module.exports = {
 
   // Método para criar um novo produto
   async store(req, res) {
+    console.log('Dados recebidos no corpo da requisição:', req.body);
     try {
       const { nome, preco, estoque } = req.body;
       const produto = await Produto.create({ nome, preco, estoque });
